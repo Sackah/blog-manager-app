@@ -8,15 +8,16 @@ require('dotenv').config();
 mongoose.connect(process.env.DB_URI)
     .then((result)=>{
         console.log('db connected');
-        app.listen(4000);
+        app.listen(4000, '0.0.0.0');
     })
     .catch((err)=>{
         console.log(err.message);
     })
 
+//middleware
 app.set('view engine', 'ejs');
-
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res)=>{
     console.log('request made');
@@ -38,12 +39,27 @@ app.get('/blogs', (req, res)=>{
         })
     
 });
+
 app.get('/about', (req, res)=>{
     res.render('about', {title: 'About'});
 });
+
 app.get('/create', (req, res)=>{
     res.render('create', {title: 'Create Blog'});
 });
+
+app.post('/create', (req, res)=>{
+    const blog = new Blog(req.body);
+
+    blog.save()
+        .then((result)=>{
+            res.redirect('/blogs');
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        });
+});
+
 app.get('/blogs/:id', (req, res)=>{
     const id = req.params.id;
 
