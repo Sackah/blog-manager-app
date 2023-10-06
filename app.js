@@ -1,7 +1,18 @@
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
+const Blog = require('./models/blog');
+require('dotenv').config();
 
-app.listen(4000);
+
+mongoose.connect(process.env.DB_URI)
+    .then((result)=>{
+        console.log('db connected');
+        app.listen(4000);
+    })
+    .catch((err)=>{
+        console.log(err.message);
+    })
 
 app.set('view engine', 'ejs');
 
@@ -12,22 +23,52 @@ app.get('/', (req, res)=>{
     res.redirect('/blogs');
 });
 app.get('/blogs', (req, res)=>{
-    let curDate = new Date;
-    const date = convertToStandardTime(curDate.toISOString()); 
-    const blogs = [
-        {title: 'First blog', snippet: 'this is the first blog', author: 'NY Times', date, id: '1'},
-        {title: 'Second blog', snippet: 'this is the second blog', author: 'yoshi', date, id: '2'},
-        {title: 'Third blog', snippet: 'this is the third blog', author: 'mario', date, id:'3'}
-    ]
-
-    res.render('index', {title: 'Home', blogs});
-})
+    Blog.find().sort({ createdAt: -1 })
+        .then((result)=>{
+            const blogs = result.map((blog)=>{
+                return { 
+                    ...blog._doc,
+                    date: convertToStandardTime(blog.createdAt)
+                 };
+            })
+            res.render('index', {title: 'Home', blogs: blogs});
+        })
+        .catch((err)=>{
+            console.log(err.message)
+        })
+    
+});
 app.get('/about', (req, res)=>{
     res.render('about', {title: 'About'});
-})
+});
 app.get('/create', (req, res)=>{
     res.render('create', {title: 'Create Blog'});
-})
+});
+app.get('/blogs/:id', (req, res)=>{
+    const id = req.params.id;
+
+    Blog.findById(id)
+        .then((result)=>{
+            res.render('blogDetails', {title: 'Blog Details', blog: result});
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        });
+});
+
+app.delete('/blogs/:id', (req, res)=>{
+    const id = req.params.id;
+    
+    Blog.findByIdAndDelete(id)
+        .then((result)=>{
+            res.json({
+                redirect: '/blogs'
+            });
+        })
+        .catch((err)=>{
+            console.log(err.message);
+        });
+});
 
 
 //helper functions

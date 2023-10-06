@@ -118,3 +118,18 @@ box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
 strong{
     color: black;
 }
+article{
+    margin: 30px;
+    color: rgb(100, 96, 96);
+    position: relative;
+}
+img{
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 4px;
+    border-radius: 50%;
+}
+img:hover{
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+
+    <body>
+        <%- include('./partials/nav.ejs') %>
+
+        <div class="details contents">
+            <h1><%= blog.title %></h1>
+            <article>
+                <%= blog.body %>
+                <img class="delete" data-doc="<%= blog._id %>" src="/assets/trashcan.svg" alt="delete">
+            </article>
+            <p>Witten by ~ <%= blog.author %></p>
+        </div>
+
+        <%- include('./partials/footer.ejs') %>
+
+        <script>
+            const trashcan = document.querySelector('.delete');
+            const endpoint = `/blogs/${trashcan.dataset.doc}`
+            console.log(endpoint);
+            trashcan.addEventListener('click', (e)=>{
+                fetch(endpoint, {
+                    method: 'DELETE'
+                })
+                .then((res)=>{
+                    return res.json();
+                })
+                .then((data)=>{
+                    window.location.href = data.redirect;
+                })
+                .catch((err)=>{
+                    console.log(err.message);
+                });
+            });
+        </script>
+    </body>
+</html>
