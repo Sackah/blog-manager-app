@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
+
+body{
+    max-width: 1200px;
+    margin: 0 auto;
+    color: rgb(34, 34, 34);
+    box-sizing: border-box;
+    font-family: 'Noto Serif', serif;
+}
+h1{
+    font-size: 1.5em;
+}
+nav h1{
+    font-size: 3em;
+    display: inline;
+    color: rgb(34, 34, 34)
+}
+.site-title{
+    display: inline;
+    margin-bottom: 20px;
+} 
+nav{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 1px;
+    height: 110px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+ul{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style-type: none;
+    margin-left: 10px;
+}
+li a{
+    color: rgb(119, 119, 119);
+}
+li a:hover{
+    color: crimson;
+}
+.contents{
+    margin-top: 40px;
+    margin-left: 20px;
+}
+footer{
+    color: rgb(119, 119, 119);
+    position: relative;
+    margin: 100px auto 20px;
+    text-align: center;
+}
+form{
+    text-align: center;
+    width: 400px;
+    margin: 40px auto;
+}
+label, input, textarea{
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+input, textarea{
+    padding: 8px;
+    margin-top: 5px;
+}
+label{
+    margin-top: 18px;
+}
+textarea{
+    height: 120px;
+}
+button{
+    cursor: pointer;
+    background: crimson;
+    margin: auto;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    border: none;
+    font-size: 1em;
+    border-radius: 5px;
+}
