@@ -7,6 +7,25 @@
         
         <div class="contents">
             <h1>Homepage</h1>
+
+            <% if (blogs.length > 0) {%>
+                <% blogs.forEach(blog => { %>
+                    <div class="blog-preview">
+                        <div>
+                            <a href="/blogs/<%= blog.id %>">
+                                <h2><%= blog.title %></h2>
+                                <h3><%= blog.snippet %></h3>
+                                <div class="flex">
+                                    <p>Written by: <strong><%= blog.author %></strong></p>
+                                    <p><%= blog.date %></p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No blogs to display</p>
+            <% } %>
         </div>
 
         <%- include('./partials/footer.ejs') %>
