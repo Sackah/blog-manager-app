@@ -69,6 +69,7 @@ app.get('/blogs/:id', (req, res)=>{
         })
         .catch((err)=>{
             console.log(err.message);
+            res.status(404).render('404', {title: 'Blog Not Found'});
         });
 });
 
@@ -84,6 +85,10 @@ app.delete('/blogs/:id', (req, res)=>{
         .catch((err)=>{
             console.log(err.message);
         });
+});
+
+app.use((req, res)=>{
+    res.status(404).render('404', {title: 'Not Found'});
 });
 
 
